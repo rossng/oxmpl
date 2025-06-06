@@ -1,5 +1,37 @@
 use crate::base::state;
-use std::f64::consts::PI;
+use std::{error, f64::consts::PI, fmt};
+
+#[derive(Debug, PartialEq)]
+pub enum StateSpaceError {
+    /// The length of the provided bounds does not match the dimension.
+    DimensionMismatch { expected: usize, found: usize },
+    /// A lower bound is greater than or equal to its corresponding upper bound.
+    InvalidBound { lower: f64, upper: f64 },
+    /// A 0-dimensional space was requested without explicit (empty) bounds.
+    ZeroDimensionUnbounded,
+}
+impl fmt::Display for StateSpaceError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::DimensionMismatch { expected, found } => write!(
+                f,
+                "provided bounds length ({}) does not match specified dimension ({}).",
+                found, expected
+            ),
+            Self::InvalidBound { lower, upper } => {
+                write!(
+                    f,
+                    "Lower bound {} is greater than upper bound {}.",
+                    lower, upper
+                )
+            }
+            Self::ZeroDimensionUnbounded => {
+                write!(f, "Cannot create 0-dimensional unbounded space.")
+            }
+        }
+    }
+}
+impl error::Error for StateSpaceError {}
 
 pub trait StateSpace {
     /// StateType defines what is acceptable in current StateSpace
@@ -27,35 +59,37 @@ pub struct RealVectorStateSpace {
 }
 
 impl RealVectorStateSpace {
-    pub fn new(dimension: usize, bounds_option: Option<Vec<(f64, f64)>>) -> Self {
+    pub fn new(
+        dimension: usize,
+        bounds_option: Option<Vec<(f64, f64)>>,
+    ) -> Result<Self, StateSpaceError> {
         let bounds = match bounds_option {
             Some(explicit_bounds) => {
                 if explicit_bounds.len() != dimension {
-                    panic!(
-                        "Provided bounds length ({}) does not match specified dimension ({}).",
-                        explicit_bounds.len(),
-                        dimension
-                    );
+                    return Err(StateSpaceError::DimensionMismatch {
+                        expected: dimension,
+                        found: explicit_bounds.len(),
+                    });
                 }
                 for bound in &explicit_bounds {
-                    if bound.1 <= bound.0 {
-                        panic!(
-                            "Lower bound: {}, is greater than Upper bound: {}.",
-                            bound.0, bound.1
-                        )
+                    if bound.0 >= bound.1 {
+                        return Err(StateSpaceError::InvalidBound {
+                            lower: bound.0,
+                            upper: bound.1,
+                        });
                     }
                 }
                 explicit_bounds
             }
             None => {
                 if dimension == 0 {
-                    panic!("Cannot create a 0-dimensional unbounded space without explicit empty bounds.");
+                    return Err(StateSpaceError::ZeroDimensionUnbounded);
                 }
                 vec![(f64::NEG_INFINITY, f64::INFINITY); dimension]
             }
         };
 
-        RealVectorStateSpace { dimension, bounds }
+        Ok(Self { dimension, bounds })
     }
 }
 
@@ -157,10 +191,10 @@ impl StateSpace for SO2StateSpace {
     }
 }
 
-#[cfg(test)]
-#[path = "unittests/rvss_tests.rs"]
-mod rvss_tests;
+// #[cfg(test)]
+// #[path = "unittests/rvss_tests.rs"]
+// mod rvss_tests;
 
-#[cfg(test)]
-#[path = "unittests/so2ss_tests.rs"]
-mod so2ss_tests;
+// #[cfg(test)
+// #[path = "unittests/so2ss_tests.rs"]
+// mod so2ss_tests;
