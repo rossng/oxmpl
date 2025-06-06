@@ -145,16 +145,43 @@ impl StateSpace for RealVectorStateSpace {
         }
     }
 
-    // TODO
-    fn enforce_bounds(&self, state: &mut Self::StateType) {}
+    fn enforce_bounds(&self, state: &mut Self::StateType) {
+        if state.values.len() != self.dimension {
+            assert_eq!(
+                state.values.len(),
+                self.dimension,
+                "State and space dimension mismatch when enforcing bounds."
+            );
+        }
+        for (i, value) in state.values.iter_mut().enumerate() {
+            if i < self.bounds.len() {
+                let (lower, upper) = self.bounds[i];
+                *value = value.clamp(lower, upper);
+            }
+        }
+    }
 
-    // TODO
     fn satisfies_bounds(&self, state: &Self::StateType) -> bool {
-        false
+        if state.values.len() != self.dimension {
+            assert_eq!(
+                state.values.len(),
+                self.dimension,
+                "State and space dimension mismatch when checking bound satisfaction."
+            );
+        }
+        for i in 0..self.dimension {
+            let (lower, upper) = self.bounds[i];
+            if state.values[i] - f64::EPSILON > upper || state.values[i] + f64::EPSILON < lower {
+                return false;
+            }
+        }
+        true
     }
 }
 
-pub struct SO2StateSpace {}
+pub struct SO2StateSpace {
+    // pub bounds: Vec<(f64, f64)>,
+}
 
 impl StateSpace for SO2StateSpace {
     type StateType = state::SO2State;
@@ -183,10 +210,10 @@ impl StateSpace for SO2StateSpace {
     }
 
     // TODO
-    fn enforce_bounds(&self, state: &mut Self::StateType) {}
+    fn enforce_bounds(&self, _state: &mut Self::StateType) {}
 
     // TODO
-    fn satisfies_bounds(&self, state: &Self::StateType) -> bool {
+    fn satisfies_bounds(&self, _state: &Self::StateType) -> bool {
         false
     }
 }
