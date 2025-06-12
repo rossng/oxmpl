@@ -25,6 +25,7 @@
       "rust-src"
       "rustc"
       "rustfmt"
+      "rust-analyzer"
     ];
   in {
     # Development shells for each supported system
