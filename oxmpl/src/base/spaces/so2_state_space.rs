@@ -1,5 +1,7 @@
 use std::f64::consts::PI;
-use crate::base::{space::StateSpace, state::SO2State};
+use rand::Rng;
+
+use crate::base::{error::StateSamplingError, space::StateSpace, state::SO2State};
 
 pub struct SO2StateSpace {
     // pub bounds: Vec<(f64, f64)>,
@@ -37,6 +39,10 @@ impl StateSpace for SO2StateSpace {
     // TODO
     fn satisfies_bounds(&self, _state: &Self::StateType) -> bool {
         false
+    }
+
+    fn sample_uniform(&self, rng: &mut impl Rng) -> Result<SO2State, StateSamplingError> {
+        todo!()
     }
 }
 

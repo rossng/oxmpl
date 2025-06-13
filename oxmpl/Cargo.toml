@@ -7,3 +7,6 @@ edition = "2021"
 [lib]
 name = "oxmpl"
 crate-type = ["lib"]
+
+[dependencies]
+rand = "0.9.1"

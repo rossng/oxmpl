@@ -1,6 +1,7 @@
+use rand::Rng;
+
 use crate::base::{
-    space::{StateSpace, StateSpaceError},
-    state::RealVectorState,
+    error::{StateSamplingError, StateSpaceError}, space::StateSpace, state::RealVectorState
 };
 
 pub struct RealVectorStateSpace {
@@ -127,5 +128,21 @@ impl StateSpace for RealVectorStateSpace {
             }
         }
         true
+    }
+
+    fn sample_uniform(&self, rng: &mut impl Rng) -> Result<Self::StateType, StateSamplingError> {
+        let mut values = Vec::with_capacity(self.dimension);
+
+        for i in 0..self.dimension {
+            let (lower, upper) = self.bounds[i];
+
+            if !lower.is_finite() || !upper.is_finite() {
+                return Err(StateSamplingError::UnboundedDimension { dimension_index: i });
+            }
+
+            values.push(rng.random_range(lower..upper));
+        }
+
+        Ok(RealVectorState { values })
     }
 }
