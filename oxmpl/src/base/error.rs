@@ -32,13 +32,13 @@ impl error::Error for StateSpaceError {}
 
 #[derive(Debug, PartialEq)]
 pub enum StateSamplingError {
+    /// When trying to sample a space that isn't bounded.
     UnboundedDimension { dimension_index: usize },
 }
-
 impl fmt::Display for StateSamplingError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            StateSamplingError::UnboundedDimension { dimension_index } => {
+            Self::UnboundedDimension { dimension_index } => {
                 write!(
                     f,
                     "Cannot sample uniformly because dimension {dimension_index} is unbounded."
@@ -47,5 +47,25 @@ impl fmt::Display for StateSamplingError {
         }
     }
 }
-
 impl error::Error for StateSamplingError {}
+
+#[derive(Debug, PartialEq)]
+pub enum PlanningError {
+    /// Solution search timed-out.
+    Timeout,
+    /// No solution found.
+    NoSolutionFound,
+}
+impl fmt::Display for PlanningError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Timeout => {
+                write!(f, "No solution found within timeout.")
+            }
+            Self::NoSolutionFound => {
+                write!(f, "No solution found.")
+            }
+        }
+    }
+}
+impl error::Error for PlanningError {}
