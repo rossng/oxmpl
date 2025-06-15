@@ -139,7 +139,9 @@ impl StateSpace for RealVectorStateSpace {
             if !lower.is_finite() || !upper.is_finite() {
                 return Err(StateSamplingError::UnboundedDimension { dimension_index: i });
             }
-
+            if lower >= upper {
+                return Err(StateSamplingError::ZeroVolume);
+            }
             values.push(rng.random_range(lower..upper));
         }
 

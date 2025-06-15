@@ -12,5 +12,5 @@ pub trait Planner<S: State, SP: StateSpace<StateType = S>, G: Goal<S>> {
         problem_def: Arc<ProblemDefinition<S, SP, G>>,
         validity_checker: Arc<dyn StateValidityChecker<S> + Send + Sync>,
     );
-    fn solve(&self, timeout: Duration) -> Result<Path<S>, PlanningError>;
+    fn solve(&mut self, timeout: Duration) -> Result<Path<S>, PlanningError>;
 }

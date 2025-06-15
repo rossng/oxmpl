@@ -34,6 +34,12 @@ impl error::Error for StateSpaceError {}
 pub enum StateSamplingError {
     /// When trying to sample a space that isn't bounded.
     UnboundedDimension { dimension_index: usize },
+    /// The space or region to be sampled has no volume (e.g., all dimensions have min >= max).
+    ZeroVolume,
+    /// It was not possible to generate a sample that satisfies the goal conditions.
+    GoalRegionUnsatisfiable,
+    /// An iterative sampling attempt (like for a goal region) failed to find a sample within a set number of attempts.
+    GoalSamplingTimeout { attempts: u32 },
 }
 impl fmt::Display for StateSamplingError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -42,6 +48,18 @@ impl fmt::Display for StateSamplingError {
                 write!(
                     f,
                     "Cannot sample uniformly because dimension {dimension_index} is unbounded."
+                )
+            }
+            Self::ZeroVolume => {
+                write!(f, "Cannot sample from a region with zero volume.")
+            }
+            Self::GoalRegionUnsatisfiable => {
+                write!(f, "Could not generate a sample from the goal region because its constraints may be unsatisfiable.")
+            }
+            Self::GoalSamplingTimeout { attempts } => {
+                write!(
+                    f,
+                    "Failed to generate a goal sample within {attempts} attempts."
                 )
             }
         }
