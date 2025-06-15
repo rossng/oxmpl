@@ -1,2 +1,2 @@
-pub mod rrt;
+mod rrt;
 pub use rrt::RRT;

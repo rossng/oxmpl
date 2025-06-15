@@ -1,5 +1,4 @@
 use std::{
-    marker::PhantomData,
     sync::Arc,
     time::{Duration, Instant},
 };
@@ -35,8 +34,6 @@ pub struct RRT<S: State, SP: StateSpace<StateType = S>, G: Goal<S>> {
     validity_checker: Option<Arc<dyn StateValidityChecker<S> + Send + Sync>>,
     tree: Vec<Node<S>>,
 
-    // This marker helps the Rust compiler understand the struct uses these generic types.
-    _marker: PhantomData<(S, SP, G)>,
 }
 
 impl<S, SP, G> RRT<S, SP, G>
@@ -52,7 +49,6 @@ where
             problem_def: None,
             validity_checker: None,
             tree: Vec::new(),
-            _marker: PhantomData,
         }
     }
 
