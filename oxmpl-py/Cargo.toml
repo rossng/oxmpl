@@ -3,8 +3,8 @@ name = "oxmpl-py"
 version = "0.1.0"
 edition = "2021"
 authors = ["Junior Sundar <juniorsundar@gmail.com>"]
-description = "Python bindings for the oxmpl library"
-license = "MIT"
+description = "Python Bindings for the OxMPL Library"
+license = "BSD-3"
 
 [lib]
 name = "oxmpl_py"
@@ -13,3 +13,4 @@ crate-type = ["cdylib"]
 [dependencies]
 pyo3 = { version = "0.24.0", features = ["extension-module"] }
 oxmpl = { path = "../oxmpl" }
+rand = "0.9.1"

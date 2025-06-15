@@ -4,6 +4,7 @@ use crate::base::{
 };
 use std::{sync::Arc, time::Duration};
 
+#[derive(Clone)]
 pub struct Path<S: State>(pub Vec<S>);
 
 pub trait Planner<S: State, SP: StateSpace<StateType = S>, G: Goal<S>> {

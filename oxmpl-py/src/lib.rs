@@ -1,15 +1,19 @@
 use pyo3::prelude::*;
 
-/// Formats the sum of two numbers as string.
-#[pyfunction]
-fn sum_as_string(a: usize, b: usize) -> PyResult<String> {
-    Ok((a + b).to_string())
-}
+#[macro_use]
+mod macros;
+mod base;
+mod geometric;
 
-/// A Python module implemented in Rust.
 #[pymodule]
-fn oxmpl_py(m: &Bound<'_, PyModule>) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(sum_as_string, m)?)?;
+fn oxmpl_py(py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
+
+    let base_module = base::create_module(py)?;
+    m.add_submodule(&base_module)?;
+    let geometric_module = geometric::create_module(py)?;
+    m.add_submodule(&geometric_module)?;
+    m.add("__version__", env!("CARGO_PKG_VERSION"))?;
+    m.add("__doc__", "A Rust-powered motion planning library for Python, inspired by OMPL.")?;
+
     Ok(())
 }
-
