@@ -41,7 +41,7 @@ impl StateSpace for SO2StateSpace {
         false
     }
 
-    fn sample_uniform(&self, rng: &mut impl Rng) -> Result<SO2State, StateSamplingError> {
+    fn sample_uniform(&self, _rng: &mut impl Rng) -> Result<SO2State, StateSamplingError> {
         todo!()
     }
 }
