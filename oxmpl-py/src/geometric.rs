@@ -1,4 +1,5 @@
 use pyo3::prelude::*;
+use pyo3::types::PyDict;
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
@@ -23,9 +24,12 @@ pub fn create_module(py: Python<'_>) -> PyResult<Bound<'_, PyModule>> {
     let geometric_module = PyModule::new(py, "geometric")?;
     let planners_module = PyModule::new(py, "planners")?;
 
-    planners_module.add_class::<PyRrtRv>()?;
+    let sys_modules = py.import("sys")?.getattr("modules")?.downcast_into::<PyDict>()?;
 
+    planners_module.add_class::<PyRrtRv>()?;
     geometric_module.add_submodule(&planners_module)?;
-    // parent_module.add_submodule(&geometric_module)?;
+
+    sys_modules.set_item("oxmpl_py.geometric.planners", planners_module)?;
+
     Ok(geometric_module)
 }
