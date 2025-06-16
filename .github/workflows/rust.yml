@@ -65,4 +65,4 @@ jobs:
           echo "Updated oxmpl-py/Cargo.toml:"
           cat oxmpl-py/Cargo.toml
 
-          cargo publish --package oxmpl-py --token ${{ secrets.CARGO_TOKEN }}
+          cargo publish --package oxmpl-py --token ${{ secrets.CARGO_TOKEN }} --allow-dirty
