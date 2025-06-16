@@ -52,8 +52,14 @@ mod tests {
         assert!(rvs_db_checker.is_valid(&s1), "s1 should be valid");
         assert!(rvs_db_checker.is_valid(&s2), "s2 should be valid");
         assert!(rvs_db_checker.is_valid(&s3), "s3 should be valid");
-        assert!(!rvs_db_checker.is_valid(&s4), "s4 should be invalid (dim 0 too low)");
-        assert!(!rvs_db_checker.is_valid(&s5), "s5 should be invalid (dim 1 too high)");
+        assert!(
+            !rvs_db_checker.is_valid(&s4),
+            "s4 should be invalid (dim 0 too low)"
+        );
+        assert!(
+            !rvs_db_checker.is_valid(&s5),
+            "s5 should be invalid (dim 1 too high)"
+        );
     }
 
     #[test]
@@ -65,27 +71,45 @@ mod tests {
         let s_on_lower = state::RealVectorState {
             values: vec![-2.0, -5.0],
         };
-        assert!(rvs_db_checker.is_valid(&s_on_lower), "State on all lower bounds should be valid");
+        assert!(
+            rvs_db_checker.is_valid(&s_on_lower),
+            "State on all lower bounds should be valid"
+        );
         let s_on_upper = state::RealVectorState {
             values: vec![2.0, 0.0],
         };
-        assert!(rvs_db_checker.is_valid(&s_on_upper), "State on all upper bounds should be valid");
+        assert!(
+            rvs_db_checker.is_valid(&s_on_upper),
+            "State on all upper bounds should be valid"
+        );
         let s_below_lower_dim0 = state::RealVectorState {
             values: vec![-2.0000001, -2.5],
         };
-        assert!(!rvs_db_checker.is_valid(&s_below_lower_dim0), "State just below lower bound for dim 0 should be invalid");
+        assert!(
+            !rvs_db_checker.is_valid(&s_below_lower_dim0),
+            "State just below lower bound for dim 0 should be invalid"
+        );
         let s_below_lower_dim1 = state::RealVectorState {
             values: vec![0.0, -5.0000001],
         };
-        assert!(!rvs_db_checker.is_valid(&s_below_lower_dim1), "State just below lower bound for dim 1 should be invalid");
+        assert!(
+            !rvs_db_checker.is_valid(&s_below_lower_dim1),
+            "State just below lower bound for dim 1 should be invalid"
+        );
         let s_above_upper_dim0 = state::RealVectorState {
             values: vec![2.0000001, -2.5],
         };
-        assert!(!rvs_db_checker.is_valid(&s_above_upper_dim0), "State just above upper bound for dim 0 should be invalid");
+        assert!(
+            !rvs_db_checker.is_valid(&s_above_upper_dim0),
+            "State just above upper bound for dim 0 should be invalid"
+        );
         let s_above_upper_dim1 = state::RealVectorState {
             values: vec![0.0, 0.0000001],
         };
-        assert!(!rvs_db_checker.is_valid(&s_above_upper_dim1), "State just above upper bound for dim 1 should be invalid");
+        assert!(
+            !rvs_db_checker.is_valid(&s_above_upper_dim1),
+            "State just above upper bound for dim 1 should be invalid"
+        );
     }
 
     #[test]
@@ -94,14 +118,18 @@ mod tests {
             bounds_per_dimension: vec![(-2.0, 2.0), (-5.0, 0.0)],
         };
 
-        let s_too_few_dims = state::RealVectorState {
-            values: vec![0.0],
-        };
-        assert!(!rvs_db_checker.is_valid(&s_too_few_dims), "State with too few dimensions should be invalid");
+        let s_too_few_dims = state::RealVectorState { values: vec![0.0] };
+        assert!(
+            !rvs_db_checker.is_valid(&s_too_few_dims),
+            "State with too few dimensions should be invalid"
+        );
         let s_too_many_dims = state::RealVectorState {
             values: vec![0.0, -1.0, 0.0],
         };
-        assert!(!rvs_db_checker.is_valid(&s_too_many_dims), "State with too many dimensions should be invalid");
+        assert!(
+            !rvs_db_checker.is_valid(&s_too_many_dims),
+            "State with too many dimensions should be invalid"
+        );
     }
 
     #[test]
@@ -109,18 +137,23 @@ mod tests {
         let checker_empty_bounds = DimensionBoundsChecker {
             bounds_per_dimension: vec![],
         };
-        let s_empty = state::RealVectorState {
-            values: vec![],
-        };
-        assert!(checker_empty_bounds.is_valid(&s_empty), "Empty state with empty bounds should be valid");
-        let s_non_empty = state::RealVectorState {
-            values: vec![0.0],
-        };
-        assert!(!checker_empty_bounds.is_valid(&s_non_empty), "Non-empty state with empty bounds should be invalid (dim mismatch)");
+        let s_empty = state::RealVectorState { values: vec![] };
+        assert!(
+            checker_empty_bounds.is_valid(&s_empty),
+            "Empty state with empty bounds should be valid"
+        );
+        let s_non_empty = state::RealVectorState { values: vec![0.0] };
+        assert!(
+            !checker_empty_bounds.is_valid(&s_non_empty),
+            "Non-empty state with empty bounds should be invalid (dim mismatch)"
+        );
         let checker_non_empty_bounds = DimensionBoundsChecker {
             bounds_per_dimension: vec![(0.0, 1.0)],
         };
-        assert!(!checker_non_empty_bounds.is_valid(&s_empty), "Empty state with non-empty bounds should be invalid (dim mismatch)");
+        assert!(
+            !checker_non_empty_bounds.is_valid(&s_empty),
+            "Empty state with non-empty bounds should be invalid (dim mismatch)"
+        );
     }
 
     #[test]

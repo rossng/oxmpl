@@ -3,8 +3,7 @@ use rand::Rng;
 use crate::base::{error::StateSamplingError, state::State};
 
 pub use crate::base::spaces::{
-    real_vector_state_space::RealVectorStateSpace,
-    so2_state_space::SO2StateSpace,
+    real_vector_state_space::RealVectorStateSpace, so2_state_space::SO2StateSpace,
 };
 
 pub trait StateSpace {

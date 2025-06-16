@@ -63,7 +63,9 @@ mod tests {
 
     #[test]
     fn test_so2_state_normalise() {
-        let mut state1 = SO2State { value: 3.0 * PI / 2.0 };
+        let mut state1 = SO2State {
+            value: 3.0 * PI / 2.0,
+        };
         let state2 = state1.normalise();
         assert_eq!(state2.value, -PI / 2.0);
     }

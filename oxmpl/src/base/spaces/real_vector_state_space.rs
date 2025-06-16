@@ -1,7 +1,9 @@
 use rand::Rng;
 
 use crate::base::{
-    error::{StateSamplingError, StateSpaceError}, space::StateSpace, state::RealVectorState
+    error::{StateSamplingError, StateSpaceError},
+    space::StateSpace,
+    state::RealVectorState,
 };
 
 pub struct RealVectorStateSpace {

@@ -33,7 +33,6 @@ pub struct RRT<S: State, SP: StateSpace<StateType = S>, G: Goal<S>> {
     problem_def: Option<Arc<ProblemDefinition<S, SP, G>>>,
     validity_checker: Option<Arc<dyn StateValidityChecker<S> + Send + Sync>>,
     tree: Vec<Node<S>>,
-
 }
 
 impl<S, SP, G> RRT<S, SP, G>

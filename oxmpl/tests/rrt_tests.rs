@@ -109,13 +109,7 @@ fn is_path_valid(
 
 #[test]
 fn test_rrt_finds_path_around_obstacle() {
-    let new_rvss_result = RealVectorStateSpace::new(
-        2,
-        Some(vec![
-            (0.0, 10.0),
-            (0.0, 10.0),
-        ]),
-    );
+    let new_rvss_result = RealVectorStateSpace::new(2, Some(vec![(0.0, 10.0), (0.0, 10.0)]));
 
     let space;
     match new_rvss_result {

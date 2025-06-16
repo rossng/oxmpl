@@ -1,5 +1,5 @@
-use std::f64::consts::PI;
 use rand::Rng;
+use std::f64::consts::PI;
 
 use crate::base::{error::StateSamplingError, space::StateSpace, state::SO2State};
 
@@ -45,4 +45,3 @@ impl StateSpace for SO2StateSpace {
         todo!()
     }
 }
-
