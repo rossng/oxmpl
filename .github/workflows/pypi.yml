@@ -6,13 +6,14 @@
 name: pypi
 
 on:
-  # push:
+  push:
   #   branches:
   #     - main
   #     - master
-  #   tags:
-  #     - '*'
-  # pull_request:
+    tags:
+      - '*'
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 permissions:
