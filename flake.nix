@@ -37,12 +37,23 @@
         name = "rust-dev-shell";
         packages = [
           rustToolchain
-          # pkgs.rust-analyzer # Or fenix.packages.${system}.rust-analyzer for fenix provided one
-          # Add other development tools specific to the shell here
-          # e.g., pkgs.openssl pkgs.pkg-config
+          pkgs.uv
+          pkgs.python3
         ];
-        # You can set environment variables here if needed
-        # RUST_SRC_PATH = "${rustToolchain}/lib/rustlib/src/rust/library";
+
+        shellHook = ''
+          VENV_DIR=".venv"
+
+          if [ ! -d "$VENV_DIR" ]; then
+            echo "Creating Python virtual environment at $VENV_DIR..."
+            uv venv $VENV_DIR -p ${pkgs.python3}/bin/python
+          fi
+
+          source "$VENV_DIR/bin/activate"
+
+          uv pip install --quiet -r requirements.txt
+
+        '';
       };
     });
   };
