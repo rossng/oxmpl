@@ -58,7 +58,7 @@ pip install oxmpl-py
 The core library is available on crates.io and can be added to your project's `Cargo.toml`:
 ```toml
 [dependencies]
-oxmpl = "0.1.2" # Replace with the latest version
+oxmpl = "0.2.0" # Replace with the latest version
 ```
 
 # Quick Start
