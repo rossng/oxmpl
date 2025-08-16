@@ -9,6 +9,10 @@ The Open Motion-Planning Library but Oxidised
 <br>
 </div>
 
+# Additional Links
+
+- [Backlog](./docs/BACKLOG.md)
+
 # Introduction
 
 ## The What?

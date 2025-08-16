@@ -1,0 +1,21 @@
+# Backlog
+
+- [x] Implementing basic Planning Algoriths:
+    - [x] RRT
+    - [x] RRTConnect
+    - [x] RRTStar
+    - [x] PRM
+- [x] Implmenting basic State Spaces
+    - [x] RealVectorStateSpace
+    - [ ] SO2
+    - [ ] SO3
+    - [ ] CompoundStateSpace
+        - [ ] SE2
+        - [ ] SE3
+- [ ] Refactor Python Bindings module: `oxmpl-py`:
+    - Its a mess right now...
+- [ ] Implement Path Simplification and Smoothing
+- [ ] Benchmarking
+- [ ] Visualisation tooling?
+- [ ] Implement Samplers
+- [ ] KdTrees for nearest-neighbours calculations
