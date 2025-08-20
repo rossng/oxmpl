@@ -5,8 +5,9 @@
 use std::{
     collections::{HashMap, VecDeque},
     sync::Arc,
-    time::{Duration, Instant},
 };
+
+use crate::time::{Duration, Instant};
 
 use crate::base::{
     error::PlanningError,
