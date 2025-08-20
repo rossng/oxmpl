@@ -1,0 +1,33 @@
+[package]
+name = "oxmpl-js"
+version = "0.3.0"
+edition = "2021"
+authors = [
+  "Junior Sundar <juniorsundar@gmail.com>",
+  "Ross Gardiner <github@public.rossng.eu>",
+]
+description = "JavaScript/WASM Bindings for the OxMPL Library"
+license = "BSD-3-Clause"
+repository = "https://github.com/juniorsundar/oxmpl"
+readme = "../README.md"
+keywords = ["robotics", "motion-planning", "wasm", "javascript"]
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+js-sys = "0.3"
+oxmpl = { path = "../oxmpl" }
+rand = "0.9"
+getrandom = { version = "0.3", features = ["wasm_js"] }
+serde = { version = "1.0", features = ["derive"] }
+serde-wasm-bindgen = "0.6"
+console_error_panic_hook = "0.1"
+
+[dependencies.web-sys]
+version = "0.3"
+features = ["console"]
+
+[profile.release]
+opt-level = "s"
+lto = true

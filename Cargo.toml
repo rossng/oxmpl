@@ -2,5 +2,6 @@
 members = [
     "oxmpl",
     "oxmpl-py",
+    "oxmpl-js",
 ]
 resolver = "2"

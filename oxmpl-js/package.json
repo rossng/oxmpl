@@ -1,0 +1,31 @@
+{
+  "name": "oxmpl-js-dev",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "wasm-pack build --target bundler --out-dir pkg-bundler",
+    "postinstall": "npm run build",
+    "test": "npm run build && vitest run",
+    "pack": "npm run build && cd pkg-bundler && npm pack",
+    "publish": "npm run build && cd pkg-bundler && npm publish",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "example": "node --experimental-wasm-modules examples/simple_2d_planning.js"
+  },
+  "dependencies": {
+    "oxmpl": "file:pkg-bundler/"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "eslint": "^9.33.0",
+    "globals": "^16.3.0",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.2.0",
+    "vite-plugin-top-level-await": "^1.4.4",
+    "vite-plugin-wasm": "^3.3.0",
+    "vitest": "^3.2.4",
+    "wasm-pack": "^0.13.1"
+  }
+}
