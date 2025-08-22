@@ -31,7 +31,10 @@
     # Development shells for each supported system
     devShells = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
-      rustToolchain = fenix.packages.${system}.complete.withComponents rustToolchainComponents;
+      rustToolchain = fenix.packages.${system}.combine [
+        (fenix.packages.${system}.complete.withComponents rustToolchainComponents)
+        fenix.packages.${system}.targets.wasm32-unknown-unknown.latest.rust-std
+      ];
     in {
       default = pkgs.mkShell {
         name = "rust-dev-shell";
@@ -39,6 +42,8 @@
           rustToolchain
           pkgs.uv
           pkgs.python3
+          pkgs.wasm-pack
+          pkgs.nodejs
         ];
 
         shellHook = ''
