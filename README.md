@@ -47,7 +47,7 @@ If you spot any issues or have ideas for improvements, please don't hesitate to 
 
 # Installation
 
-You can use `oxmpl` in either your Rust or Python projects.
+You can use `oxmpl` in Rust, Python, or JavaScript projects.
 
 ## **For Python Users**
 
@@ -56,6 +56,16 @@ The library is available on PyPI and can be installed with `pip`:
 ```bash
 pip install oxmpl-py
 ```
+
+## **For JavaScript/TypeScript Users**
+
+JavaScript/WASM bindings are available:
+
+```bash
+npm install oxmpl-js  # Coming soon
+```
+
+> **Note:** Currently available as source. See [oxmpl-js/README.md](./oxmpl-js/README.md) for build instructions.
 
 ## For Rust Users
 
@@ -66,6 +76,59 @@ oxmpl = "0.2.0" # Replace with the latest version
 ```
 
 # Quick Start
+
+## JavaScript
+
+```javascript
+import * as oxmpl from 'oxmpl-js';
+
+// A state is invalid if it's inside a circular obstacle at the origin
+function isStateValid(state) {
+  const [x, y] = state;
+  return Math.sqrt(x * x + y * y) > 2.0;
+}
+
+// Create a 2D state space with bounds
+const space = new oxmpl.RealVectorStateSpace(2, [-10.0, 10.0, -10.0, 10.0]);
+
+// Define start state
+const start = new Float64Array([-5.0, -5.0]);
+
+// Define circular goal region
+const target = [5.0, 5.0];
+const radius = 0.5;
+const goal = new oxmpl.Goal(
+  (state) => {
+    const [x, y] = state;
+    const dist = Math.sqrt((x - target[0]) ** 2 + (y - target[1]) ** 2);
+    return dist <= radius;
+  },
+  (state) => {
+    const [x, y] = state;
+    const dist = Math.sqrt((x - target[0]) ** 2 + (y - target[1]) ** 2);
+    return Math.max(0, dist - radius);
+  },
+  () => new Float64Array(target) // Sample goal center
+);
+
+// Create problem and run planner
+const problem = new oxmpl.ProblemDefinition(space, start, goal);
+const validityChecker = new oxmpl.StateValidityChecker(isStateValid);
+
+const planner = new oxmpl.RRT(0.5, 0.05);
+planner.setup(problem, validityChecker);
+
+try {
+  const path = planner.solve(5.0);
+  if (path && path.length() > 0) {
+    console.log(`Solution found with ${path.length()} states!`);
+  } else {
+    console.log('No solution found');
+  }
+} catch (e) {
+  console.log(`Planning failed: ${e}`);
+}
+```
 
 ## Python
 
@@ -258,10 +321,11 @@ fn main() {
 
 # Project Structure
 
-This project is a Cargo workspace containing two separate crates:
+This project is a Cargo workspace containing three separate crates:
 
-* **oxmpl/**: The core Rust library containing all the planning logic, traits, and data structures. It has no Python-specific code.
-* **oxmpl-py/**: A lightweight crate that contains the PyO3 bindings to expose the functionality of the` oxmpl` library to Python.
+* **oxmpl/**: The core Rust library containing all the planning logic, traits, and data structures. It has no Python or JavaScript-specific code.
+* **oxmpl-py/**: A lightweight crate that contains the PyO3 bindings to expose the functionality of the `oxmpl` library to Python.
+* **oxmpl-js/**: JavaScript/WASM bindings using wasm-pack to provide `oxmpl` functionality in web browsers and Node.js.
 
 # Development
 
