@@ -12,7 +12,7 @@ repos:
         name: rustfmt
         description: Format Rust files using rustfmt.
         # This hook should be 'entry: cargo' and 'args: [...]' too
-        entry: cargo 
+        entry: cargo
         args: ['fmt', '--', '--check']
         language: rust
         types: [rust]
@@ -23,9 +23,10 @@ repos:
         # Ensure 'entry' is ONLY 'cargo'
         entry: cargo
         # Ensure the command is in 'args'
-        args: ['clippy', '--', '-D', 'warnings']
+        args: ['clippy', '--workspace', '--', '-D', 'warnings']
         language: rust
         types: [rust]
+        pass_filenames: false
 
     -   id: check
         name: cargo-check
@@ -33,6 +34,27 @@ repos:
         # Ensure 'entry' is ONLY 'cargo'
         entry: cargo
         # Ensure the command is in 'args'
-        args: ['check']
+        args: ['check', '--workspace']
         language: rust
         types: [rust]
+        pass_filenames: false
+
+    -   id: eslint
+        name: eslint
+        description: Run ESLint on JavaScript files.
+        entry: bash
+        args: ['-c', 'cd oxmpl-js && npm run lint']
+        language: system
+        files: oxmpl-js/.*\.(js|mjs|cjs)$
+        exclude: oxmpl-js/(node_modules|pkg-bundler)/
+        pass_filenames: false
+
+    -   id: prettier
+        name: prettier
+        description: Format JavaScript files with Prettier.
+        entry: bash
+        args: ['-c', 'cd oxmpl-js && npm run format']
+        language: system
+        files: oxmpl-js/.*\.(js|mjs|cjs|json)$
+        exclude: oxmpl-js/(node_modules|pkg-bundler|package-lock\.json)
+        pass_filenames: false
