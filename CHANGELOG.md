@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.4.0](https://github.com/rossng/oxmpl/compare/v0.3.0...v0.4.0) (2025-08-26)
+
+
+### Features
+
+* add `oxmpl-js` crate with JS/WASM bindings ([9c7e7ec](https://github.com/rossng/oxmpl/commit/9c7e7ec4be3f79e184b04a74550807083b1cb9bc))
+* allow targeting wasm for `oxmpl` crate ([6b0c024](https://github.com/rossng/oxmpl/commit/6b0c02478efb7a46f5835629c7550f6c6d4e6325))
+
+
+### Documentation
+
+* Write up BACKLOG of tasks left ([06d6c17](https://github.com/rossng/oxmpl/commit/06d6c175b6ed959cf7cc7dcfef4c4447ad5afe72))
+
+
+### Continuous Integration
+
+* add js.yml workflow ([ec8bdbb](https://github.com/rossng/oxmpl/commit/ec8bdbbf9d73b3a33924019c9f55623363ffdcf1))
+* pre-commit hooks (add Prettier, ESLint, fix Rust); update nix devshell ([dfbc78f](https://github.com/rossng/oxmpl/commit/dfbc78fd91b4effdcf7d8e2e528fa62f66015e7e))
+* test new release-please config ([bf67d6e](https://github.com/rossng/oxmpl/commit/bf67d6e9870392da97129b1929ffc5c5b7aa31b4))
+
 ## [0.3.0](https://github.com/juniorsundar/oxmpl/compare/v0.2.0...v0.3.0) (2025-08-15)
 
 
