@@ -9,9 +9,14 @@ The Open Motion-Planning Library but Oxidised
 <br>
 </div>
 
+[![Rust CI & Publish](https://github.com/juniorsundar/oxmpl/actions/workflows/rust.yml/badge.svg?branch=main)](https://github.com/juniorsundar/oxmpl/actions/workflows/rust.yml)
+[![pypi](https://github.com/juniorsundar/oxmpl/actions/workflows/pypi.yml/badge.svg?branch=main)](https://github.com/juniorsundar/oxmpl/actions/workflows/pypi.yml)
+[![JavaScript/WASM CI & Publish](https://github.com/juniorsundar/oxmpl/actions/workflows/js.yml/badge.svg?branch=main)](https://github.com/juniorsundar/oxmpl/actions/workflows/js.yml)
+
 # Additional Links
 
 - [Backlog](./docs/BACKLOG.md)
+- [Changelog](./CHANGELOG.md)
 
 # Introduction
 

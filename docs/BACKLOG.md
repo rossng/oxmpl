@@ -7,13 +7,14 @@
     - [x] PRM
 - [x] Implmenting basic State Spaces
     - [x] RealVectorStateSpace
-    - [ ] SO2
+    - [x] SO2
     - [ ] SO3
     - [ ] CompoundStateSpace
         - [ ] SE2
         - [ ] SE3
-- [ ] Refactor Python Bindings module: `oxmpl-py`:
-    - Its a mess right now...
+- [x] Refactor Python Bindings module: `oxmpl-py`:
+    - ~Its a mess right now...~
+    - May revisit this later
 - [ ] Implement Path Simplification and Smoothing
 - [ ] Benchmarking
 - [ ] Visualisation tooling?

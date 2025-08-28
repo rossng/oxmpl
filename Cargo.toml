@@ -2,3 +2,7 @@
 members = ["oxmpl", "oxmpl-py", "oxmpl-js"]
 resolver = "2"
 package.version = "0.4.0"                   # x-release-please-version
+
+[profile.release]
+opt-level = "s"
+lto = true
