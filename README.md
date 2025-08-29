@@ -67,7 +67,7 @@ pip install oxmpl-py
 JavaScript/WASM bindings are available:
 
 ```bash
-npm install oxmpl-js  # Coming soon
+npm install oxmpl-js
 ```
 
 > **Note:** Currently available as source. See [oxmpl-js/README.md](./oxmpl-js/README.md) for build instructions.
@@ -77,7 +77,7 @@ npm install oxmpl-js  # Coming soon
 The core library is available on crates.io and can be added to your project's `Cargo.toml`:
 ```toml
 [dependencies]
-oxmpl = "0.2.0" # Replace with the latest version
+oxmpl = "0.4.0" # Replace with the latest version
 ```
 
 # Quick Start

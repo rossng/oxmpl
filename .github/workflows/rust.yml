@@ -66,3 +66,16 @@ jobs:
           cat oxmpl-py/Cargo.toml
 
           cargo publish --package oxmpl-py --token ${{ secrets.CARGO_TOKEN }} --allow-dirty
+
+      - name: Update dependency and publish `oxmpl-js` bindings crate
+        run: |
+          TAG_NAME="${{ github.ref_name }}"
+          VERSION="${TAG_NAME#v}"
+          echo "Preparing to publish oxmpl-js version ${VERSION}"
+
+          sed -i "s|oxmpl = { path = \"../oxmpl\" }|oxmpl = \"$VERSION\"|" oxmpl-js/Cargo.toml
+
+          echo "Updated oxmpl-js/Cargo.toml:"
+          cat oxmpl-js/Cargo.toml
+
+          cargo publish --package oxmpl-js --token ${{ secrets.CARGO_TOKEN }} --allow-dirty
